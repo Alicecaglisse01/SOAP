@@ -33,6 +33,12 @@ const service = {
                 `;
         callback(product[0]);
       },
+      GetProducts: async function (args, callback) {
+        const products = await sql`
+          SELECT * FROM products
+        `;
+        callback({ Product: products });
+      },
     },
   },
 };

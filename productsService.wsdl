@@ -26,6 +26,23 @@
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
+    <xsd:element name="GetProductsResponse">
+    <xsd:complexType>
+        <xsd:sequence>
+            <xsd:element name="Product" maxOccurs="unbounded">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="id" type="xsd:string"/>
+                        <xsd:element name="name" type="xsd:string"/>
+                        <xsd:element name="about" type="xsd:string"/>
+                        <xsd:element name="price" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:element>
+
     </xsd:schema>
 
 </types>
@@ -38,12 +55,21 @@
         <part name="response" element="tns:CreateProductResponse"/>
     </message>
 
+    <message name="GetProductsResponseMessage">
+      <part name="response" element="tns:GetProductsResponse"/>
+    </message>
+
+
 
     <portType name="ProductsPortType">
         <operation name="CreateProduct">
             <input message="tns:CreateProductRequestMessage"/>
             <output message="tns:CreateProductResponseMessage"/>
         </operation>
+        <operation name="GetProducts">
+          <output message="tns:GetProductsResponseMessage"/>
+        </operation>
+
     </portType>
 
     <binding name="ProductsBinding" type="tns:ProductsPortType">
@@ -56,6 +82,12 @@
             <output>
                 <soap:body use="encoded" namespace="http://localhost:8000/products" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
             </output>
+        </operation>
+        <operation name="GetProducts">
+          <soap:operation soapAction="http://localhost:8000/products/GetProducts"/>
+            <output>
+              <soap:body use="encoded" namespace="http://localhost:8000/products" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+          </output>
         </operation>
     </binding>
 

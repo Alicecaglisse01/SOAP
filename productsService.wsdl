@@ -26,28 +26,35 @@
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
-    <xsd:element name="GetProductsResponse">
-    <xsd:complexType>
-        <xsd:sequence>
-            <xsd:element name="Product" maxOccurs="unbounded">
+    <xsd:element name="GetProductsRequest">
+            <xsd:complexType>
+                <xsd:sequence>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+     <xsd:element name="GetProductsResponse">
                 <xsd:complexType>
                     <xsd:sequence>
-                        <xsd:element name="id" type="xsd:string"/>
-                        <xsd:element name="name" type="xsd:string"/>
-                        <xsd:element name="about" type="xsd:string"/>
-                        <xsd:element name="price" type="xsd:string"/>
+                        <xsd:element maxOccurs="unbounded" ref="Product" />
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
-        </xsd:sequence>
-    </xsd:complexType>
-</xsd:element>
+            <xsd:element name="Product">
+                <xsd:element name="id" type="xsd:string" />
+                <xsd:element name="name" type="xsd:string" />
+                <xsd:element name="about" type="xsd:string" />
+                <xsd:element name="price" type="xsd:string" />
+            </xsd:element>
 
     </xsd:schema>
 
 </types>
 
     <message name="CreateProductRequestMessage">
+        <part name="request" element="tns:CreateProductRequest"/>
+    </message>
+
+    <message name="GetProductsRequestMessage">
         <part name="request" element="tns:CreateProductRequest"/>
     </message>
 
@@ -67,6 +74,7 @@
             <output message="tns:CreateProductResponseMessage"/>
         </operation>
         <operation name="GetProducts">
+          <input message="tns:GetProductsRequestMessage"/>
           <output message="tns:GetProductsResponseMessage"/>
         </operation>
 
@@ -85,6 +93,9 @@
         </operation>
         <operation name="GetProducts">
           <soap:operation soapAction="http://localhost:8000/products/GetProducts"/>
+          <input>
+                <soap:body use="encoded" namespace="http://localhost:8000/products" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
             <output>
               <soap:body use="encoded" namespace="http://localhost:8000/products" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
           </output>

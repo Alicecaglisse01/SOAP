@@ -9,7 +9,21 @@ soap.createClient(
       return;
     }
     // Make a SOAP request
-    client.CreateProduct(
+
+    client.GetProducts({}, function (err, products) {
+      if (err) {
+        console.error(
+          "Error making SOAP request:",
+          err.response.status,
+          err.response.statusText,
+          err.body
+        );
+        return;
+      }
+      console.log("Products:", products);
+    });
+
+    /*client.CreateProduct(
       { name: "My product", about: "test", price: "100" },
       function (err, result) {
         if (err) {
@@ -24,5 +38,6 @@ soap.createClient(
         console.log("Result:", result);
       }
     );
+    */
   }
 );

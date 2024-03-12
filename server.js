@@ -37,7 +37,7 @@ const service = {
         const products = await sql`
           SELECT * FROM products
         `;
-        callback({ Product: products });
+        callback(products);
       },
     },
   },
